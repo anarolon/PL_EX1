@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SimpleParser.iml" filepath="$PROJECT_DIR$/.idea/modules/SimpleParser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/simpleparser-build.iml" filepath="$PROJECT_DIR$/.idea/modules/simpleparser-build.iml" />
+    </modules>
+  </component>
+</project>
