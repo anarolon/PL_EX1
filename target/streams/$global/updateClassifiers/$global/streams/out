@@ -531,7 +531,7 @@
 [debug] 	[NOT REQUIRED] org.scala-lang.modules#scala-xml_2.12;1.0.6!scala-xml_2.12.jar(src)
 [debug] 	[NOT REQUIRED] jline#jline;2.14.6!jline.jar(src)
 [debug] 	[NOT REQUIRED] org.scala-lang#scala-reflect;2.12.6!scala-reflect.jar(src)
-[debug] :: resolution report :: resolve 364ms :: artifacts dl 32ms
+[debug] :: resolution report :: resolve 359ms :: artifacts dl 32ms
 [debug] 	report for default#simpleparser$sources;0.1 compile produced in C:\Users\Chaliana Rolón Ojeda\IdeaProjects\SimpleParser\target\scala-2.12\resolution-cache\reports\default-simpleparser$sources-compile.xml
 [debug] 	report for default#simpleparser$sources;0.1 runtime produced in C:\Users\Chaliana Rolón Ojeda\IdeaProjects\SimpleParser\target\scala-2.12\resolution-cache\reports\default-simpleparser$sources-runtime.xml
 [debug] 	report for default#simpleparser$sources;0.1 test produced in C:\Users\Chaliana Rolón Ojeda\IdeaProjects\SimpleParser\target\scala-2.12\resolution-cache\reports\default-simpleparser$sources-test.xml
@@ -543,4 +543,4 @@
 [debug] 	report for default#simpleparser$sources;0.1 plugin produced in C:\Users\Chaliana Rolón Ojeda\IdeaProjects\SimpleParser\target\scala-2.12\resolution-cache\reports\default-simpleparser$sources-plugin.xml
 [debug] 	report for default#simpleparser$sources;0.1 pom produced in C:\Users\Chaliana Rolón Ojeda\IdeaProjects\SimpleParser\target\scala-2.12\resolution-cache\reports\default-simpleparser$sources-pom.xml
 [debug] 	report for default#simpleparser$sources;0.1 scala-tool produced in C:\Users\Chaliana Rolón Ojeda\IdeaProjects\SimpleParser\target\scala-2.12\resolution-cache\reports\default-simpleparser$sources-scala-tool.xml
-[debug] 	resolve done (364ms resolve - 32ms download)
+[debug] 	resolve done (359ms resolve - 32ms download)
