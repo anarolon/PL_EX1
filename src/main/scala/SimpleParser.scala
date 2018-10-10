@@ -1,10 +1,13 @@
 import scala.util.parsing.combinator._
 
-
-// """[a-z]""".r is a regular expression
-// ^^ {..} "a parser combinator for function application", If the parser combination
-// on the left succeeds, the function on the right is executed (_.toString)
-// Add custom Scala code to toperate on the parser results
+// Chaliana Rolón Ojeda #16-6780
+// PL Take Home #1 Submission
+// Credit to Luis F. Domenech and Luis R. Estrada
+// References:
+// https://dzone.com/articles/getting-started-with-scala-parser-combinators
+// http://matt.might.net/articles/grammars-bnf-ebnf/
+// https://docs.scala-lang.org/getting-started-intellij-track/building-a-scala-project-with-intellij-and-sbt.html
+// And Others..
 
 case class ID(str: String)
 case class DELIMETER(str: String)
@@ -43,12 +46,7 @@ class SimpleParser extends RegexParsers {
   def word: Parser[String] = charac ^^ {_.toString}
   def digit: Parser[String] = number ^^ {_.toString}
   def int: Parser[INTEGER] = "[0-9]+".r ^^ (int => INTEGER(int))
-
-
-
-  def bool: Parser[BOOL] = boolean ^^ {
-    case b => BOOL(b)
-  }
+  def bool: Parser[BOOL] = boolean ^^ {case b => BOOL(b)}
 
   def sign: Parser[SIGN] = opera ^^ {
     case "+" => SIGN(OPERATOR("+"))
@@ -61,28 +59,6 @@ class SimpleParser extends RegexParsers {
 
   def binop: Parser[BINOP] = ("<=" | ">=" | "!=" | "&" | "|" | "+" | "-" | "*" | "/" | "=" | "<" | ">") ^^ {
     case opera => BINOP(OPERATOR(opera))
-  }
-
-  val ignore = not(reserved | bool)
-                        // P1           // P2
-  def id: Parser[ID] = (ignore ~> word ~ rep(ignore ~> word | digit)) ^^ {
-    case w ~ k => ID(w+k)
-    case w ~ Nil=> ID(w)
-  }
-
-  def factor: Parser[FACTOR] = (("(" ~ exp ~ ")") | prim | id) ^^ {
-    case ID(id) => FACTOR(ID(id))
-    case PRIM(prim) => FACTOR(PRIM(prim))
-    case exp => FACTOR(exp)
-  }
-
-  def term: Parser[TERM] = ((unop ~ term) | (factor ~ "(" ~ ")") | (factor ~ opt("(" ~> expL <~ ")")) | int | bool) ^^ {
-    case BOOL(bool) => TERM(BOOL(bool), None)
-    case INTEGER(int) => TERM(INTEGER(int), None)
-    case UNOP(op) ~ TERM(t1,t2) => TERM(UNOP(op), TERM(t1,t2))
-    case FACTOR(f) ~ Some(c) => TERM(FACTOR(f), c)
-    case FACTOR(f) ~ "(" ~ ")" => TERM(FACTOR(f), ())
-    case FACTOR(f) ~ None => TERM(FACTOR(f), None)
   }
 
   def idL: Parser[IDLIST] = propid ^^ {
@@ -104,6 +80,29 @@ class SimpleParser extends RegexParsers {
 
   def Def: Parser[Any] = (id ~ ":=" ~ exp ~ ";") ^^ {
     case id ~ exp => DEF(id, exp)
+  }
+
+  // Bypass the reserved words and boolean tokens as ids
+  val ignore = not(reserved | bool)
+                        // P1           // P2
+  def id: Parser[ID] = (ignore ~> word ~ rep(ignore ~> word | digit)) ^^ {
+    case w ~ k => ID(w+k)
+    case w ~ Nil=> ID(w)
+  }
+
+  def factor: Parser[FACTOR] = (("(" ~ exp ~ ")") | prim | id) ^^ {
+    case ID(id) => FACTOR(ID(id))
+    case PRIM(prim) => FACTOR(PRIM(prim))
+    case exp => FACTOR(exp)
+  }
+
+  def term: Parser[TERM] = ((unop ~ term) | (factor ~ "(" ~ ")") | (factor ~ opt("(" ~> expL <~ ")")) | int | bool) ^^ {
+    case BOOL(bool) => TERM(BOOL(bool), None)
+    case INTEGER(int) => TERM(INTEGER(int), None)
+    case UNOP(op) ~ TERM(t1,t2) => TERM(UNOP(op), TERM(t1,t2))
+    case FACTOR(f) ~ Some(c) => TERM(FACTOR(f), c)
+    case FACTOR(f) ~ "(" ~ ")" => TERM(FACTOR(f), ())
+    case FACTOR(f) ~ None => TERM(FACTOR(f), None)
   }
 
   def exp: Parser[Any] = ((term ~ opt(binop ~ exp)) |  ("if" ~ exp ~ "then" ~ exp ~ "else" ~ exp) | ("let" ~ rep1(Def) ~ "in" ~ exp) | ("map" ~ idL ~ "to" ~ exp)) ^^ {
@@ -136,6 +135,7 @@ object Main {
       "z:=g(); " +
       "in " +
       "(g(x,y,z))(null?(true),list?(false),first(null))")
+
     println(parseBoo)
   }
 

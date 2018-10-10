@@ -4,7 +4,7 @@
 		module="simpleparser$sources"
 		revision="0.1"
 		status="integration"
-		publication="20181007221357"
+		publication="20181009215929"
 	/>
 	<configurations>
 		<conf name="compile" visibility="public" description=""/>
